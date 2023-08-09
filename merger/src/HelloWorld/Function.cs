@@ -45,11 +45,6 @@ namespace HelloWorld
       DataToSend data = JsonSerializer.Deserialize<DataToSend>(apigProxyEvent.GetRawText());
       string[] args = data.args;
 
-      var body = new Dictionary<string, string[]>
-            {
-                { "args", args },
-            };
-
       foreach (string item in args)
       {
         if (item.Contains("--files"))
@@ -117,7 +112,8 @@ namespace HelloWorld
       Console.WriteLine("Successfully uploaded " + objectName);
 
       //! delete files from container and bucket after merging
-      // File.Delete(FILENAME);
+      File.Delete(FILENAME);
+      Console.WriteLine("File: " + FILENAME + " deleted from container successfully");
 
       // foreach (string item in FILES_TO_MERGE)
       // {
@@ -130,6 +126,11 @@ namespace HelloWorld
       //   await s3Client.DeleteObjectAsync(delRequest);
       //   Console.WriteLine("File: " + item + " deleted successfully");
       // }
+
+      var body = new Dictionary<string, string[]>
+            {
+                { "args", args },
+            };
 
       return new APIGatewayProxyResponse
       {
