@@ -47,21 +47,21 @@ To set up and run this project locally, follow the instructions below.
 
 #### Connector
 
-To run the Connector component, navigate to the `connector/hello-world` subfolder and execute the following command:
+To run the Connector component execute the following command:
 
 ```bash
 sam local start-api
 ```
 
 #### Filler
-To run the Filler component, navigate to the `filler/hello-world` subfolder and execute the following command:
+To run the Filler component execute the following command:
 
 ```bash
 sam local start-lambda --host 0.0.0.0 --warm-containers LAZY
 ```
 
 #### Merger
-To run the Merger component, navigate to the merger/hello-world subfolder and execute the following command:
+To run the Merger component execute the following command:
 
 ```bash
 sam local start-lambda --host 0.0.0.0 --port 3002
