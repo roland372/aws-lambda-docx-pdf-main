@@ -2,8 +2,6 @@
 
 Project utilizing AWS Lambda functions to populate DOCX files with provided input, then converts them to PDF files and then merge PDFs into one.
 
-# Postman input for Lambda connector
-
 ## Table of Contents
 
 - [Components](#components)
