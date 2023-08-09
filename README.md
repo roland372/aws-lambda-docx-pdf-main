@@ -71,20 +71,88 @@ sam local start-lambda --host 0.0.0.0 --port 3002
 
 ```bash
 {
-    "args": [
-        {
-            "name": "name1",
-            "token": "token1",
-            "inputDocxName": "input1.docx"
-        },
-        {
-            "name": "name2",
-            "token": "token2",
-            "inputDocxName": "input1.docx"
-
-        }
-    ],
-    "bucketName": "00bucket",
-    "outputPdfName": "output1.pdf"
+    "template": {
+        "templateBody": "YOUR_TEMPLATE_BODY",
+        "externalLogId": "a1I7E000001DLvvUAG",
+        "documents": [
+            {
+                "userId": "0057E000009roh2QAA",
+                "transactionIds": ["1", "2"],
+                "transactionId": "1",
+                "parentId": "005580000037l6mAAA",
+                "firstPublishLocationId": "0057E000009roh2QAA",
+                "fileName": "Account Generated Document #2.pdf",
+                "extension": ".pdf",
+                "encrypt": null,
+                "dataToFill": {
+                    "NAME": "Pyramid Construction Inc.",
+                    "WEBSITE": "www.pyramid.com",
+                    "PHONE": "(014) 427-4427",
+                    "TYPE": "Customer - Channel",
+                    "INDUSTRY": "Construction",
+                    "NUMBEROFEMPLOYEES": "",
+                    "ANNUALREVENUE": "",
+                    "DateOfCreation": "2020-04-16 10:36:00",
+                    "LatinProVerb": "Veni Vidi Vici",
+                    "c.TODAY": "08/02/2022",
+                    "OWNERID__NAME": "John Duda",
+                    "contacts": [
+                        {
+                            "MOBILEPHONE": "(014) 454-6364",
+                            "LASTNAME": "Stumuller",
+                            "FIRSTNAME": "Pat"
+                        },
+                        {
+                            "MOBILEPHONE": "",
+                            "LASTNAME": "Bond",
+                            "FIRSTNAME": "John"
+                        }
+                    ]
+                },
+                "attachAsFile": true,
+                "assemblyFill": false
+            },
+            {
+                "userId": "0057E000009roh2QAA",
+                "transactionIds": ["1", "2"],
+                "transactionId": "2",
+                "parentId": "005580000037l6mAAA",
+                "firstPublishLocationId": "0057E000009roh2QAA",
+                "fileName": "Account Generated Document #2.pdf",
+                "extension": ".pdf",
+                "encrypt": null,
+                "dataToFill": {
+                    "NAME": "Pyramid Construction Inc.",
+                    "WEBSITE": "www.pyramid.com",
+                    "PHONE": "(014) 427-4427",
+                    "TYPE": "Customer - Channel",
+                    "INDUSTRY": "Construction",
+                    "NUMBEROFEMPLOYEES": "",
+                    "ANNUALREVENUE": "",
+                    "DateOfCreation": "2020-04-16 10:36:00",
+                    "LatinProVerb": "Veni Vidi Vici",
+                    "c.TODAY": "08/02/2022",
+                    "OWNERID__NAME": "Lukasz Duda",
+                    "contacts": [
+                        {
+                            "MOBILEPHONE": "(014) 454-6364",
+                            "LASTNAME": "Stumuller",
+                            "FIRSTNAME": "Pat"
+                        },
+                        {
+                            "MOBILEPHONE": "",
+                            "LASTNAME": "Bond",
+                            "FIRSTNAME": "John"
+                        }
+                    ]
+                },
+                "attachAsFile": true,
+                "assemblyFill": false
+            }
+        ]
+    },
+    "organizationId": "00D7Q000007aaB3UAI",
+    "namespace": "ave",
+    "callbackEndpoint": "https://britenet--AvenirUAT.my.salesforce.com"
 }
 ```
