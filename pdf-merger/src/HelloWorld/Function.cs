@@ -115,17 +115,17 @@ namespace HelloWorld
       File.Delete(FILENAME);
       Console.WriteLine("File: " + FILENAME + " deleted from container successfully");
 
-      // foreach (string item in FILES_TO_MERGE)
-      // {
-      //   DeleteObjectRequest delRequest = new DeleteObjectRequest
-      //   {
-      //     BucketName = BUCKET_NAME,
-      //     Key = item,
-      //   };
+      foreach (string item in FILES_TO_MERGE)
+      {
+        DeleteObjectRequest delRequest = new DeleteObjectRequest
+        {
+          BucketName = BUCKET_NAME,
+          Key = item,
+        };
 
-      //   await s3Client.DeleteObjectAsync(delRequest);
-      //   Console.WriteLine("File: " + item + " deleted successfully");
-      // }
+        await s3Client.DeleteObjectAsync(delRequest);
+        Console.WriteLine("File: " + item + " deleted successfully");
+      }
 
       var body = new Dictionary<string, string[]>
             {

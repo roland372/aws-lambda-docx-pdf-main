@@ -20,8 +20,9 @@ export const invokeFiller = async (templateBody: string, document: TDocumentData
 };
 
 export const invokeMerger = async (convertedFiles: string[], bucketName: string) => {
+    const outputFile = uuidv4();
     const dataToSendToMerger = {
-        args: [`--files=${[...convertedFiles]}`, `--bucket=${bucketName}`, `--filename=${'output'}.pdf`],
+        args: [`--files=${[...convertedFiles]}`, `--bucket=${bucketName}`, `--filename=${outputFile}.pdf`],
     };
 
     const params = {
