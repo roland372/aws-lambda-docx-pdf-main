@@ -6,12 +6,11 @@ import { invokeFiller, invokeMerger } from './utils';
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const { template }: TGeneratedObject = JSON.parse(event.body || '{}');
-        const convertedFiles: string[] = [];
 
-        //! sam local start-lambda --host 0.0.0.0
-        for (const document of template.documents) {
-            await invokeFiller(template.templateBody, document, convertedFiles);
-        }
+        //! sam local start-lambda --host 0.0.0.0 --warm-containers LAZY
+        const convertedFiles = await Promise.all(
+            template.documents.map(async (document) => await invokeFiller(template.templateBody, document)),
+        );
 
         //! sam local start-lambda --host 0.0.0.0 --port 3002
         await invokeMerger(convertedFiles, bucketName);
@@ -25,11 +24,11 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             headers: { 'content-type': 'application/json' },
         };
     } catch (err) {
-        console.log(err);
+        console.log('<----- error' + err);
         return {
             statusCode: 500,
             body: JSON.stringify({
-                message: 'some error happened',
+                message: '<----- error' + err,
             }),
         };
     }

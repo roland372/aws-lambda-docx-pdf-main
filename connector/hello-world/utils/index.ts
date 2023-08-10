@@ -2,7 +2,7 @@ import { bucketName, lambdaFiller, lambdaMerger } from '../config';
 import { TDocumentData } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
-export const invokeFiller = async (templateBody: string, document: TDocumentData, convertedFiles: string[]) => {
+export const invokeFiller = async (templateBody: string, document: TDocumentData) => {
     const outputFile = uuidv4();
 
     const params = {
@@ -16,9 +16,7 @@ export const invokeFiller = async (templateBody: string, document: TDocumentData
     const response = JSON.parse(payloadString);
     const convertedFile = JSON.parse(response.body).fileName;
 
-    convertedFiles.push(convertedFile);
-
-    return data;
+    return convertedFile;
 };
 
 export const invokeMerger = async (convertedFiles: string[], bucketName: string) => {
