@@ -14,7 +14,7 @@ export const lambdaHandler = async (
 	try {
 		const { document, templateBody, outputFile, bucketName }: TDataFromRequest =
 			event;
-		const outputFileWithExtension = outputFile + document.extension;
+		const outputFileNameWithExtension = outputFile + document.extension;
 
 		validateInput(document, templateBody, outputFile, bucketName);
 
@@ -22,26 +22,43 @@ export const lambdaHandler = async (
 		await fs.writeFile(`../../tmp/${outputFile}`, buf);
 		console.log(`<----- File filled and saved as ${outputFile} ----->`);
 
-		const outputPDF = await convertDocxToPdf(
-			outputFile,
-			outputFileWithExtension
-		);
-		const outputConfig = {
-			Key: `${outputFileWithExtension}`,
-			Bucket: bucketName,
-			Body: outputPDF,
-		};
+		//! PDF
+		if (document.extension === '.pdf') {
+			const outputPDF = await convertDocxToPdf(
+				outputFile,
+				outputFileNameWithExtension
+			);
+			const outputConfig = {
+				Key: `${outputFileNameWithExtension}`,
+				Bucket: bucketName,
+				Body: outputPDF,
+			};
 
-		await putObjectInBucket(outputConfig);
-		await fs.unlink(`../../tmp/${outputFileWithExtension}`);
-		console.log('<----- PDF file deleted from container. ----->');
+			await putObjectInBucket(outputConfig);
+		} else if (document.extension === '.docx') {
+			//! DOCX
+			const filledFile = await fs.readFile(
+				`../../tmp/${outputFileNameWithExtension}`
+			);
+
+			const outputConfig = {
+				Key: `${outputFileNameWithExtension}`,
+				Bucket: bucketName,
+				Body: filledFile,
+			};
+
+			await putObjectInBucket(outputConfig);
+		}
+
+		await fs.unlink(`../../tmp/${outputFileNameWithExtension}`);
+		console.log('<----- file deleted from container. ----->');
 
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
 				function: 'LambdaFillerFunction',
-				message: `File converted and saved successfully, converted file: ${outputFileWithExtension}`,
-				fileName: `${outputFileWithExtension}`,
+				message: `File converted and saved successfully, converted file: ${outputFileNameWithExtension}`,
+				fileName: outputFileNameWithExtension,
 			}),
 			headers: { 'content-type': 'application/json' },
 		};

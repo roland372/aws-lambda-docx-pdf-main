@@ -8,7 +8,13 @@ export const lambdaFiller = new AWS.Lambda({
     sslEnabled: false,
 });
 
-export const lambdaMerger = new AWS.Lambda({
+export const lambdaPdfMerger = new AWS.Lambda({
+    apiVersion: '2015-03-31',
+    endpoint: 'http://172.17.0.1:3002',
+    sslEnabled: false,
+});
+
+export const lambdaDocxMerger = new AWS.Lambda({
     apiVersion: '2015-03-31',
     endpoint: 'http://172.17.0.1:3002',
     sslEnabled: false,

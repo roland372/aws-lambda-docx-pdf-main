@@ -17,13 +17,12 @@ const S3Client = new S3({
 type TDataFromRequest = {
     bucketName: string;
     filesToMerge: string[];
+    outputFile: string;
 };
 
 export const lambdaHandler = async (event: TDataFromRequest): Promise<APIGatewayProxyResult> => {
-    const { bucketName, filesToMerge } = event;
+    const { bucketName, filesToMerge, outputFile } = event;
     try {
-        // const filesToMerge = ['file1', 'file2'];
-        // const filesToMerge = event.filesToMerge;
         const downloadedFiles: Buffer[] = [];
 
         filesToMerge.map(async (el) => {
@@ -41,7 +40,7 @@ export const lambdaHandler = async (event: TDataFromRequest): Promise<APIGateway
 
         mergedDocx.save('nodebuffer', async function (data: Buffer) {
             await S3Client.putObject({
-                Key: 'merged.docx',
+                Key: outputFile,
                 Bucket: bucketName,
                 Body: data,
             })
@@ -55,24 +54,11 @@ export const lambdaHandler = async (event: TDataFromRequest): Promise<APIGateway
                 });
         });
 
-        // const file1 = await S3Client.getObject({
-        //     Key: 'input.docx',
-        //     Bucket: bucketName,
-        // }).promise();
-
-        // const file2 = await S3Client.getObject({
-        //     Key: 'input1.docx',
-        //     Bucket: bucketName,
-        // }).promise();
-
-        // console.log(`<----- File downloaded ----->`);
-
-        // const mergedDocx = new DocxMerger({}, [file1.Body, file2.Body]);
-
         return {
             statusCode: 200,
             body: JSON.stringify({
-                message: 'Files merged and saved successfully',
+                message: `Files merged and saved successfully, output fileName: ${outputFile}`,
+                fileName: outputFile,
             }),
         };
     } catch (err) {

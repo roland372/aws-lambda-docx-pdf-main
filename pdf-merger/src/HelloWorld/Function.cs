@@ -127,9 +127,9 @@ namespace HelloWorld
         Console.WriteLine("File: " + item + " deleted successfully");
       }
 
-      var body = new Dictionary<string, string[]>
+      var body = new Dictionary<string, string>
             {
-                { "args", args },
+                { "fileName", FILENAME },
             };
 
       return new APIGatewayProxyResponse
